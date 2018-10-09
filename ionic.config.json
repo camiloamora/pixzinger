@@ -1,0 +1,7 @@
+{
+  "name": "pixzinger",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
