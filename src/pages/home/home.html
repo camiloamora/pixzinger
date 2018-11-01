@@ -8,6 +8,38 @@
 </ion-header>
 
 <ion-content padding>
+  <!-- <b>Amigos</b>
+  <div *ngFor="let user of friends; let i = index">
+    <div *ngIf="user.friend">
+      <a routerLink="/conversation">
+        {{i}}. {{user.nick}} - {{user.email}}
+      </a>
+  </div>
+  </div> -->
+  <!-- <ion-input type="text" placeholder="Buscar amigo" [(ngModel)]="query"></ion-input> -->
+  <ion-searchbar [(ngModel)]="query" placeholder="Buscar amigos"></ion-searchbar>
+  <br>
+
+  <b>Amigos</b>
+  <ion-list *ngFor="let user of friends | search: query; let i = index;">
+      <ion-item (click)="goToConversation(user)">
+        <ion-avatar item-start>
+            <ion-icon ios="ios-chatbubbles" md="md-chatbubbles" color="secondary" *ngIf="user.friend"></ion-icon>
+            <ion-icon ios="ios-person-add" md="md-person-add" color="danger" *ngIf="!user.friend"></ion-icon>
+          </ion-avatar>
+          <!-- <h2>{{ i + 1 }}. {{ user.nick }}</h2> -->
+          <h2>{{ i + 1 }}. {{ user.nick }}</h2>
+          <h5>{{ user.email }}</h5>
+        </ion-item>
+      </ion-list>
+  <br>
+  <!-- <b>No agregados</b>
+  <ng-container *ngFor="let user of friends; let i = index;">
+    <p *ngIf="!user.friend" (click)="goToConversation(user)">
+      {{ i + 1 }}. {{ user.nick }} - {{ user.email }}
+    </p>
+  </ng-container>
+  <br> -->
   <button ion-button (click)="goToConversation()">Ir a conversación</button>
   <button ion-button (click)="goToLogin()">Ir a login</button>
 </ion-content>

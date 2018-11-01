@@ -12,12 +12,16 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { ConversationPageModule } from '../pages/conversation/conversation.module';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { AboutPageModule } from '../pages/about/about.module';
+import { ServicesUserProvider } from '../providers/services-user/services-user';
+import { SearchPipe } from '../pipes/search';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage
+    ListPage,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,8 @@ import { AboutPageModule } from '../pages/about/about.module';
     LoginPageModule,
     ConversationPageModule,
     ProfilePageModule,
-    AboutPageModule
+    AboutPageModule,
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,7 +41,8 @@ import { AboutPageModule } from '../pages/about/about.module';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ServicesUserProvider
   ]
 })
 export class AppModule {}
