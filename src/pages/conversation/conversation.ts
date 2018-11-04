@@ -24,20 +24,20 @@ export class ConversationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private userService: ServicesUserProvider) {
       
-      
+      this.id = this.navParams.get('id');
+      console.log(this.id)
+      this.friends = this.userService.getFriends();
+      this.friend = this.friends.find((friend) => {
+        return friend.uid === this.id
+      });  
       // this.friend = this.friends.find((friend) => {
       //   return friend.uid === this.
       // });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConversationPage');
-    this.id = this.navParams.get('id');
-    console.log(this.id)
-    this.friends = this.userService.getFriends();
-    this.friend = this.friends.find((friend) => {
-      return friend.uid === this.id
-    });
+    // console.log('ionViewDidLoad ConversationPage');
+    
   }
 
   goBack() {
