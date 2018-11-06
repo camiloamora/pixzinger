@@ -32,14 +32,18 @@
   </div>
   <div>
     <div>
-      <b>Amigos</b>
+      <b *ngIf="friends">Amigos ({{ friends.length}} )</b>
     </div>
     <br>
-    <div class="contact-list-item" 
+    <div class="contact-list-item contact-offline" 
+    [ngClass]="{'contact-offline': user.status == 'Offline' || 
+    user.status == 'AppearOffline'}"
+    [ngStyle]="{'color': user.status == 'Offline' || 
+    user.status == 'AppearOffline' ? 'red' : 'blue'}"
     *ngFor="let user of friends | search: query; let i = index;"
     (click)="goToConversation(user)">
-       <img src="assets/img/logo_live_online.png" alt="" class="status">
-       <b>{{user.name}}</b>
+       <img src="assets/img/{{getIconByStatus(user.status)}}" alt="" class="status">
+       <b>{{user.email}}</b>
        <small *ngIf="user.status">{{user.status}}</small>
     </div>
   </div>

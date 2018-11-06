@@ -26,10 +26,10 @@ export class ConversationPage {
       
       this.id = this.navParams.get('id');
       console.log(this.id)
-      this.friends = this.userService.getFriends();
-      this.friend = this.friends.find((friend) => {
-        return friend.uid === this.id
-      });  
+      // this.friends = this.userService.getFriends();
+      // this.friend = this.friends.find((friend) => {
+      //   return friend.uid === this.id
+      // });  
       // this.friend = this.friends.find((friend) => {
       //   return friend.uid === this.
       // });

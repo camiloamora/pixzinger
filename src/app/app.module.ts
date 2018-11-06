@@ -15,6 +15,19 @@ import { AboutPageModule } from '../pages/about/about.module';
 import { ServicesUserProvider } from '../providers/services-user/services-user';
 import { SearchPipe } from '../pipes/search';
 import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthenticationService } from '../providers/services-user/authentication.services';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAI5enqsYpY6OTl7VOhjhaqGxkXbuKpffo",
+  authDomain: "pixzinger.firebaseapp.com",
+  databaseURL: "https://pixzinger.firebaseio.com",
+  projectId: "pixzinger",
+  storageBucket: "pixzinger.appspot.com",
+  messagingSenderId: "1284497989"
+};
 
 @NgModule({
   declarations: [
@@ -30,7 +43,10 @@ import { FormsModule } from '@angular/forms';
     ConversationPageModule,
     ProfilePageModule,
     AboutPageModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,7 +58,8 @@ import { FormsModule } from '@angular/forms';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ServicesUserProvider
+    ServicesUserProvider,
+    AuthenticationService
   ]
 })
 export class AppModule {}
