@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServicesUserProvider } from '../../providers/services-user/services-user';
 import { User } from '../../interfaces/user';
+import { ConversationPageModule } from './conversation.module';
 
 /**
  * Generated class for the ConversationPage page.
@@ -17,15 +18,24 @@ import { User } from '../../interfaces/user';
 })
 export class ConversationPage {
   
-  id: string;
+  uid: string;
   friends: User[]
   friend: User
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private userService: ServicesUserProvider) {
       
-      this.id = this.navParams.get('id');
-      console.log(this.id)
+      this.uid = this.navParams.get('uid');
+      console.log(this.uid)
+      this.userService.getUserById(this.uid).valueChanges().subscribe(
+        (data: User) => {
+          console.log('data',data)
+          this.friend = data;
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
       // this.friends = this.userService.getFriends();
       // this.friend = this.friends.find((friend) => {
       //   return friend.uid === this.id

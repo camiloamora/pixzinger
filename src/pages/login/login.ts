@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AuthenticationService } from '../../providers/services-user/authentication.services';
 import { ServicesUserProvider } from '../../providers/services-user/services-user';
+import { User, Status } from '../../interfaces/user';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,7 +25,8 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authenticationService: AuthenticationService,
-    private userService: ServicesUserProvider) {
+    private userService: ServicesUserProvider,
+    private toastCtrl: ToastController) {
   }
 
   //función cuando ya esta cargada la vista
@@ -72,6 +75,48 @@ export class LoginPage {
 
   goBack() {
     this.navCtrl.pop();
+  }
+
+  loginWithFacebbok(){
+    this.authenticationService.facebookLogin()
+    .then((data) => {
+      console.log('data', data)
+      if(data.additionalUserInfo.isNewUser){
+        //register
+        const user: User = {
+          nick: data.additionalUserInfo.profile['name'],
+          active: true,
+          status: Status.Online,
+          uid: data.user.uid,
+          email: data.user.email
+        }
+        this.userService.createUser(user)
+        .then((data) => {
+          //console.log(data)
+          let toast = this.toastCtrl.create({
+            message: 'Bienvenido, Registro exitoso',
+            duration: 3000,
+            position: 'bottom'
+          });
+          toast.present();
+          this.navCtrl.setRoot(HomePage);
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      } else {
+        let toast = this.toastCtrl.create({
+          message: 'Bienvenido',
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        this.navCtrl.setRoot(HomePage);
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
 }

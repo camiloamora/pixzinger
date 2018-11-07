@@ -9,10 +9,10 @@ export enum Status {
 export interface User {
     uid: string,
     nick: string,
-    name: string,
-    age: number,
+    name?: string,
+    age?: number,
     email: string,
     active: boolean,
     status: Status,
-    friend: boolean
+    friend?: boolean
 }

@@ -28,7 +28,7 @@ export class HomePage {
 
   goToConversation(user) {
     this.navCtrl.push(ConversationPage, {
-      id: user.uid
+      uid: user.uid
     });
   }
 
