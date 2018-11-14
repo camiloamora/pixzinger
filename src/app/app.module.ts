@@ -21,12 +21,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AuthenticationService } from '../providers/services-user/authentication.services';
 
 export const firebaseConfig = {
-  apiKey: "XX",
-  authDomain: "XX",
-  databaseURL: "XX",
-  projectId: "XX",
-  storageBucket: "XX",
-  messagingSenderId: "XX"
+  apiKey: "AIzaSyAI5enqsYpY6OTl7VOhjhaqGxkXbuKpffo",
+  authDomain: "pixzinger.firebaseapp.com",
+  databaseURL: "https://pixzinger.firebaseio.com",
+  projectId: "pixzinger",
+  storageBucket: "pixzinger.appspot.com",
+  messagingSenderId: "1284497989"
 };
 
 @NgModule({

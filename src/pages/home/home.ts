@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, UrlSerializer } from 'ionic-angular';
+import { NavController, UrlSerializer, AlertController, ToastController } from 'ionic-angular';
 import { ConversationPage } from '../conversation/conversation';
 import { LoginPage } from '../login/login';
 import { User, Status } from './../../interfaces/user';
 import { ServicesUserProvider } from '../../providers/services-user/services-user';
+import { AuthenticationService } from '../../providers/services-user/authentication.services';
 
 @Component({
   selector: 'page-home',
@@ -13,17 +14,32 @@ export class HomePage {
   friends: User[]
   query: string = '';
   status: Status
-  constructor(
-    public navCtrl: NavController, 
-    private userService: ServicesUserProvider ) {
-      const usersObservable = this.userService.getUsers();
-      console.log(usersObservable)
-      usersObservable.valueChanges().subscribe((data: User[]) => {
-        this.friends = data;
+  user: User;
+  constructor(public navCtrl: NavController, 
+    public userService: ServicesUserProvider, 
+    private alertController: AlertController, 
+    private authService: AuthenticationService,
+    public toastController: ToastController) {
+    const usersObservable = this.userService.getUsers();
+    usersObservable.valueChanges().subscribe((data: User[]) => {
+      this.friends = data;
+    }, (error) => {
+      alert('Ocurrió un error');
+      console.log(error);
+    });
+    this.authService.getStatus().subscribe((session) => {
+      if (!session) {
+        return;
+      }
+      if (!session.uid) {
+        return;
+      }
+      this.userService.getUserById(session.uid).valueChanges().subscribe((user: User) => {
+        this.user = user;
       }, (error) => {
-        alert('Ocurrió un error');
         console.log(error);
-      });
+      })
+    }, (error) => {console.log(error);})
   }
 
   goToConversation(user) {
