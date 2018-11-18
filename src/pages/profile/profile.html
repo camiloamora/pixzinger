@@ -22,18 +22,30 @@
       </ion-col>
     </ion-row>
   </div>
-  <ion-list>
+<div>
+  <button ion-button (click)="takePicture('camera')">
+    <ion-icon name="camera"></ion-icon>
+  </button>
+  <button ion-button (click)="takePicture('album')">
+    <ion-icon name="images"></ion-icon>
+  </button>
+</div>
+  <ion-list *ngIf="user">
     <ion-item>
       <ion-label fixed>Nick</ion-label>
-      <ion-input type="text" ></ion-input>
+      <ion-input type="text" [(ngModel)]="user.nick"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>Subnick</ion-label>
+      <ion-input type="text" [(ngModel)]="user.subnick"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Email</ion-label>
-      <ion-input type="text" disabled></ion-input>
+      <ion-input type="text" disabled [(ngModel)]="user.email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label fixed>Status</ion-label>
-      <ion-select>
+      <ion-select [(ngModel)]="user.status">
         <ion-option value="online">Conectado</ion-option>
         <ion-option value="away">Ausente</ion-option>
         <ion-option value="busy">Ocupado</ion-option>
@@ -42,6 +54,6 @@
     </ion-item>
   </ion-list>
   <div padding>
-  <button ion-button block>Guardar</button>
+  <button ion-button block (click)="saveData()">Guardar</button>
   </div>
 </ion-content>

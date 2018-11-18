@@ -18,7 +18,7 @@ import { User } from '../interfaces/user';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ProfilePage;
+  rootPage: any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
   user: User;

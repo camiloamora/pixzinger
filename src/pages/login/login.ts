@@ -4,6 +4,7 @@ import { AuthenticationService } from '../../providers/services-user/authenticat
 import { ServicesUserProvider } from '../../providers/services-user/services-user';
 import { User, Status } from '../../interfaces/user';
 import { HomePage } from '../home/home';
+import { Platform } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -23,10 +24,12 @@ export class LoginPage {
   password: string = null;
   nick: string = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
     private authenticationService: AuthenticationService,
     private userService: ServicesUserProvider,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private platform: Platform) {
   }
 
   //función cuando ya esta cargada la vista
@@ -78,6 +81,15 @@ export class LoginPage {
   }
 
   loginWithFacebbok(){
+    if(this.platform.is('cordova')){
+      this.authenticationService.facebookLoginNative()
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((error) => {
+        console.error('error',error)
+      })
+    }
     this.authenticationService.facebookLogin()
     .then((data) => {
       console.log('data', data)
